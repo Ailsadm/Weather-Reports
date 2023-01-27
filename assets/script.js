@@ -10,37 +10,21 @@ function displayWeatherReportDetails() {
     let queryURL = "https://api.openweathermap.org/data/2.5/forecast?lat=44.34&lon=10.99&appid=b467884d90d5f5312a326152e875f308";
     
 
-    $.ajax({
-        url: queryURL,
-        method: "GET"
-    }).then(function (response) {
-        console.log(response)
+    fetch(queryURL)
+    .then(response => response.json())
+    .then(function (result) {
+        console.log(result)
 
-        let cityName = document.createElement("h1")
-        cityName.textContent = response.city.name;
-        weatherReportDetails.prepend(cityName)
+        $("#date").text(moment().format("DDD MMM, YYYY"))
 
-        let todaysDate = document.createElement("p")
-        todaysDate.text(moment().format("DDD MMM, YYYY"))
+        weatherReportDetails.innerHTML = `<h1>${result.city.name}</h1>
+        <p>${result.list[0].main.temp}</p>
+        <p>${result.list[0].main.humidity}</p>
+        <p>${result.list[0].wind.speed}</p>
+        <img src="${'https://openweathermap.org/img/w/' + result.list[0].weather[0].icon + '.png'}">`;
+       
 
-        let cityTemperature = document.createElement("p")
-        cityTemperature.textContent = response.list[0].main.temp;
-        weatherReportDetails.prepend(cityTemperature)
-
-        let cityHumidity = document.createElement("p")
-        cityHumidity.textContent = response.response.list[0].main.humidity;
-        weatherReportDetails.prepend(cityHumidity)
-
-        let cityWindSpeed = document.createElement("p")
-        cityWindSpeed.textContent = response.list[0].main.wind;
-        weatherReportDetails.prepend(cityWindSpeed)
-
-        let weatherConditionsimg = document.createElement('img');
-        img.src = response.Image;
-        weatherReportDetails.appendChild(img);
-
-
-    })
+    });
 
 }
 
