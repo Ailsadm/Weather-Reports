@@ -1,13 +1,31 @@
 let APIKey = "b467884d90d5f5312a326152e875f308";
-
 let weatherReportDetails = document.querySelector("#weatherReportDetails");
 let weatherReport = "";
+let longitude = ""; 
+// result.city.coord.lat
+let latitude = ""
+// result.city.coord.lon
 
-displayWeatherReportDetails()
+// displayWeatherReportDetails()
 
-function displayWeatherReportDetails() {
+function coordinates (){
+    let queryURL =  "http://api.openweathermap.org/geo/1.0/direct?q=" + $("#search-input").val() + "&appid=b467884d90d5f5312a326152e875f308"
+    fetch(queryURL)
+    .then(response => response.json())
+    .then(function (result) {
+        // console.log(result)
+        longitude = result[0].lon;
+        latitude = result[0].lat
+        displayWeatherReportDetails()
+    });
 
-    let queryURL = "https://api.openweathermap.org/data/2.5/forecast?lat=44.34&lon=10.99&appid=b467884d90d5f5312a326152e875f308";
+}
+
+ function  displayWeatherReportDetails(){
+
+    // coordinates();
+    // console.log(longitude)
+    let queryURL = "https://api.openweathermap.org/data/2.5/forecast?lat=" + latitude + "&lon=" + longitude + "&appid=b467884d90d5f5312a326152e875f308";
     
 
     fetch(queryURL)
@@ -28,15 +46,11 @@ function displayWeatherReportDetails() {
 
 }
 
-// document.querySelector("#add-movie").addEventListener("click", function (event) {
-//     event.preventDefault();
-    
-//     if(movieInput.value.trim() !== ""){
-//       buttonsView.innerHTML = "";
-//       let newMovie = movieInput.value
-//       movies.push(newMovie);
-//       movieInput.value ="";
-//       renderButtons();
-//     }
-  
-//   });
+document.querySelector("#search-button").addEventListener("click", function(event){
+    event.preventDefault();
+
+    coordinates()
+
+    // displayWeatherReportDetails()
+})
+
