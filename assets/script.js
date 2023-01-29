@@ -50,18 +50,16 @@ function displayfiveDayForecast(){
     .then(response => response.json())
     .then(function (result) {
 
-        let weatherArray = [result.list]
-        // console.log(result.list)
+        let weatherArray = result.list;
 
-        for (let i = 0; i < weatherArray.length; i = i+7) {
+        for (let i = 0; i < weatherArray.length; i = i + 7) {
             const weatherDay = weatherArray[i];
+            console.log(weatherDay)
 
-            console.log(weatherArray[i])
-
-            // fiveDayForecast.innerHTML = `<p>${result.list[3].clouds.dt_txt}</p>
-            // <p>${weatherDay.main.temp}</p>
-            // <p>${weatherDay.main.humidity}
-            // <img src="${'https://openweathermap.org/img/w/' + weatherDay.weather[0].icon + '.png'}"`
+            fiveDayForecast.innerHTML += `<p>${weatherDay.dt_txt}</p>
+            <p>${"Temp " + weatherDay.main.temp}</p>
+            <p>${weatherDay.main.humidity}
+            <img src="${'https://openweathermap.org/img/w/' + weatherDay.weather[0].icon + '.png'}"`
             
         }
 
