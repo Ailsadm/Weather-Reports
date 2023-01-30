@@ -7,7 +7,7 @@ let fiveDayForecast = document.querySelector("#fiveDayForecast")
 
 
 function coordinates (){
-    let queryURL =  "http://api.openweathermap.org/geo/1.0/direct?q=" + $("#search-input").val() + "&appid=b467884d90d5f5312a326152e875f308"
+    let queryURL =  "https://api.openweathermap.org/geo/1.0/direct?q=" + $("#search-input").val() + "&appid=b467884d90d5f5312a326152e875f308"
     fetch(queryURL)
     .then(response => response.json())
     .then(function (result) {
