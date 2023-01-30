@@ -6,6 +6,7 @@ let latitude = "";
 let fiveDayForecast = document.querySelector("#fiveDayForecast")
 let searchInput = document.querySelector("#search-input");
 let history = document.querySelector("#history")
+let historyContainer = document.querySelector("#historyContainer")
 
 
 function coordinates (){
@@ -16,7 +17,6 @@ function coordinates (){
         longitude = result[0].lon;
         latitude = result[0].lat
         localStorage.setItem("History", searchInput.value);
-        console.log(searchInput.value)
         displayWeatherReportDetails();
         displayfiveDayForecast();
     });
@@ -38,9 +38,9 @@ function  displayWeatherReportDetails(){
         <p>${"Wind: " + result.list[0].wind.speed}</p>
         <img src="${'https://openweathermap.org/img/w/' + result.list[0].weather[0].icon + '.png'}">`;
         
-        localStorage.getItem("History");
-        // history.textContent = result.ciy.name;
-        console.log(localStorage)
+        let citynameHistory = localStorage.getItem("History");
+        history.innerHTML = citynameHistory;
+        historyContainer.append(citynameHistory)
     });
 
 }
@@ -76,4 +76,9 @@ document.querySelector("#search-button").addEventListener("click", function(even
 
     coordinates()
 
+})
+
+history.addEventListener("click", function(){
+    displayWeatherReportDetails();
+    displayfiveDayForecast();
 })
