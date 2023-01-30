@@ -4,6 +4,8 @@ let weatherReport = "";
 let longitude = "";
 let latitude = "";
 let fiveDayForecast = document.querySelector("#fiveDayForecast")
+let searchInput = document.querySelector("#search-input");
+let history = document.querySelector("#history")
 
 
 function coordinates (){
@@ -13,29 +15,32 @@ function coordinates (){
     .then(function (result) {
         longitude = result[0].lon;
         latitude = result[0].lat
+        localStorage.setItem("History", searchInput.value);
+        console.log(searchInput.value)
         displayWeatherReportDetails();
         displayfiveDayForecast();
     });
-
 }
 
- function  displayWeatherReportDetails(){
-
+function  displayWeatherReportDetails(){
+    
     let queryURL = "https://api.openweathermap.org/data/2.5/forecast?lat=" + latitude + "&lon=" + longitude + "&appid=b467884d90d5f5312a326152e875f308";
     
-
+    
     fetch(queryURL)
     .then(response => response.json())
     .then(function (result) {
-
+        
         let formatDate = moment(result.list[0].dt_txt).format("D MMM YYYY")
         weatherReportDetails.innerHTML = `<h1>${result.city.name}</h1> <p>${formatDate}
         <p>${"Temp: " + result.list[0].main.temp}</p>
         <p>${"Humidity: " + result.list[0].main.humidity}</p>
         <p>${"Wind: " + result.list[0].wind.speed}</p>
         <img src="${'https://openweathermap.org/img/w/' + result.list[0].weather[0].icon + '.png'}">`;
-       
-
+        
+        localStorage.getItem("History");
+        // history.textContent = result.ciy.name;
+        console.log(localStorage)
     });
 
 }
