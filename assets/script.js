@@ -54,9 +54,11 @@ function  displayWeatherReportDetails(){
 
 function displayfiveDayForecast(){
 
+    fiveDayForecast.textContent = ""
+    
     let queryURL = "https://api.openweathermap.org/data/2.5/forecast?lat=" + latitude + "&lon=" + longitude + "&appid=b467884d90d5f5312a326152e875f308";
     
-
+    
     fetch(queryURL)
     .then(response => response.json())
     .then(function (result) {
@@ -67,15 +69,16 @@ function displayfiveDayForecast(){
         for (let i = 6; i < weatherArray.length; i = i + 7) {
             const weatherDay = weatherArray[i];
             let formatFiveDate = moment(weatherDay.dt_txt).format("D MMM YYYY")
-
+            
             fiveDayForecast.innerHTML += `<div class="m-3 p-2 bg-primary"><p>${formatFiveDate}</p>
             <p>${"Temp: " + weatherDay.main.temp}</p>
             <p>${"Humidity: " + weatherDay.main.humidity}
             <img src="${'https://openweathermap.org/img/w/' + weatherDay.weather[0].icon + '.png'}"></div>`;
             
         }
-
-})
+        
+    })
+    
 };
 
 document.querySelector("#search-button").addEventListener("click", function(event){

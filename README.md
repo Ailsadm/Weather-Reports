@@ -19,3 +19,14 @@ AS A traveler
 I WANT to see the weather outlook for multiple cities
 SO THAT I can plan a trip accordingly
 ```
+## Usage
+
+* Screenshot of page
+
+ ![Alt text](./assets/Capture.PNG "Title")
+
+## Deployed Application
+
+* Link to deployed application:
+
+* https://ailsadm.github.io/Weather-Reports/
