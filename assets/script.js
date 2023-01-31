@@ -10,13 +10,23 @@ let historyContainer = document.querySelector("#historyContainer")
 
 
 function coordinates (){
-    let queryURL =  "https://api.openweathermap.org/geo/1.0/direct?q=" + $("#search-input").val() + "&appid=b467884d90d5f5312a326152e875f308"
+    let cityname = searchInput.value;
+    let queryURL =  "https://api.openweathermap.org/geo/1.0/direct?q=" + cityname + "&appid=b467884d90d5f5312a326152e875f308"
     fetch(queryURL)
     .then(response => response.json())
     .then(function (result) {
         longitude = result[0].lon;
-        latitude = result[0].lat
-        localStorage.setItem("History", searchInput.value);
+        latitude = result[0].lat;
+
+        let cityButton = document.createElement("button");
+        cityButton.textContent = cityname;
+        cityButton.addEventListener("click", function(){
+            searchInput.value = cityname;
+            coordinates();
+        });
+        historyContainer.append(cityButton);
+
+        localStorage.setItem(cityname, JSON.stringify({longitude: longitude, latitude: latitude}));
         displayWeatherReportDetails();
         displayfiveDayForecast();
     });
@@ -38,9 +48,6 @@ function  displayWeatherReportDetails(){
         <p>${"Wind: " + result.list[0].wind.speed}</p>
         <img src="${'https://openweathermap.org/img/w/' + result.list[0].weather[0].icon + '.png'}">`;
         
-        let citynameHistory = localStorage.getItem("History");
-        history.innerHTML = citynameHistory;
-        historyContainer.append(citynameHistory)
     });
 
 }
@@ -76,9 +83,4 @@ document.querySelector("#search-button").addEventListener("click", function(even
 
     coordinates()
 
-})
-
-history.addEventListener("click", function(){
-    displayWeatherReportDetails();
-    displayfiveDayForecast();
 })
